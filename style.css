@@ -1875,3 +1875,363 @@ img:not(.px-tipo-icon) {
     }
 
 }
+
+
+/* =========================================================
+   CATEGORÍAS DE ATAQUE
+   ========================================================= */
+
+.ataque-categoria {
+
+    width: 82px;
+    height: 58px;
+
+    display: inline-flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    margin: 3px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.8px;
+
+    font-size: 9px;
+
+    vertical-align: middle;
+
+    backdrop-filter: blur(6px);
+
+    box-shadow:
+        inset 0 0 15px rgba(255,255,255,0.05),
+        0 0 12px rgba(0,0,0,0.35);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+
+}
+
+
+/* brillo que recorre el botón */
+
+.ataque-categoria::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 35px;
+    height: 120px;
+
+    left: -50px;
+    top: -30px;
+
+    transform: rotate(25deg);
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(255,255,255,0.25),
+            transparent
+        );
+
+    animation:
+        ataqueBrillo 3.5s infinite;
+
+}
+
+
+.ataque-categoria:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.04);
+
+}
+
+
+/* =========================================================
+   FÍSICO
+   ========================================================= */
+
+.ataque-fisico {
+
+    color: #fff4d0;
+
+    border:
+        1px solid
+        rgba(255,70,70,0.65);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(150,25,25,0.75),
+            rgba(55,10,15,0.9)
+        );
+
+    box-shadow:
+        inset 0 0 18px rgba(255,50,40,0.18),
+        0 0 15px rgba(255,40,40,0.18);
+
+}
+
+
+.ataque-explosion {
+
+    color: #ffe66d;
+
+    font-size: 28px;
+
+    line-height: 20px;
+
+    text-shadow:
+        0 0 5px #fff3a0,
+        0 0 15px rgba(255,190,0,0.8);
+
+    animation:
+        explosionPulso 1.4s infinite;
+
+}
+
+
+/* =========================================================
+   ESPECIAL
+   ========================================================= */
+
+.ataque-especial {
+
+    color: #dffaff;
+
+    border:
+        1px solid
+        rgba(0,200,255,0.65);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,80,150,0.75),
+            rgba(5,25,60,0.9)
+        );
+
+    box-shadow:
+        inset 0 0 20px rgba(0,200,255,0.20),
+        0 0 18px rgba(0,170,255,0.20);
+
+}
+
+
+.ataque-espiral {
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    border:
+        3px solid
+        #8eeaff;
+
+    border-right-color:
+        transparent;
+
+    border-bottom-color:
+        rgba(142,234,255,0.25);
+
+    box-shadow:
+        0 0 10px
+        rgba(80,220,255,0.8);
+
+    animation:
+        espiralGiro 1.3s linear infinite;
+
+    font-size: 0;
+
+}
+
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+.ataque-estado {
+
+    color: #e7e7e7;
+
+    border:
+        1px solid
+        rgba(190,190,190,0.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(90,95,105,0.75),
+            rgba(25,28,34,0.95)
+        );
+
+    box-shadow:
+        inset 0 0 20px rgba(255,255,255,0.06),
+        0 0 15px rgba(0,0,0,0.4);
+
+}
+
+
+.ataque-particulas {
+
+    width: 35px;
+    height: 25px;
+
+    position: relative;
+
+}
+
+
+.ataque-particulas i {
+
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    animation:
+        particulaEstado 1.8s infinite ease-in-out;
+
+}
+
+
+.ataque-particulas i:nth-child(1) {
+    left: 4px;
+    top: 12px;
+}
+
+
+.ataque-particulas i:nth-child(2) {
+    left: 13px;
+    top: 3px;
+    background: #111;
+    animation-delay: 0.2s;
+}
+
+
+.ataque-particulas i:nth-child(3) {
+    left: 21px;
+    top: 15px;
+    animation-delay: 0.4s;
+}
+
+
+.ataque-particulas i:nth-child(4) {
+    left: 28px;
+    top: 6px;
+    background: #111;
+    animation-delay: 0.6s;
+}
+
+
+.ataque-particulas i:nth-child(5) {
+    left: 16px;
+    top: 20px;
+    animation-delay: 0.8s;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
+@keyframes ataqueBrillo {
+
+    0% {
+        left: -60px;
+    }
+
+    45%,
+    100% {
+        left: 110%;
+    }
+
+}
+
+
+@keyframes explosionPulso {
+
+    0%,
+    100% {
+
+        transform:
+            scale(0.9)
+            rotate(0deg);
+
+    }
+
+    50% {
+
+        transform:
+            scale(1.15)
+            rotate(12deg);
+
+    }
+
+}
+
+
+@keyframes espiralGiro {
+
+    from {
+
+        transform:
+            rotate(0deg)
+            scale(0.85);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg)
+            scale(1.05);
+
+    }
+
+}
+
+
+@keyframes particulaEstado {
+
+    0%,
+    100% {
+
+        transform:
+            translate(0,0)
+            scale(0.7);
+
+        opacity: 0.45;
+
+    }
+
+    50% {
+
+        transform:
+            translate(3px,-4px)
+            scale(1.25);
+
+        opacity: 1;
+
+    }
+
+}
