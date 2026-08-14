@@ -1125,8 +1125,7 @@ function mostrarTipos(
     tipos
 ) {
 
-    pokemonTipos.innerHTML =
-        "";
+    pokemonTipos.innerHTML = "";
 
 
     tipos.forEach(
@@ -1147,7 +1146,8 @@ function mostrarTipos(
 
 
             span.textContent =
-                nombre;
+                NOMBRES_TIPOS[nombre] ||
+                capitalizar(nombre);
 
 
             const color =
