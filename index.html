@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Pokédex Estrategias</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- FONDO -->
+
+    <div class="fondo-grid"></div>
+
+    <div class="scanline"></div>
+
+
+    <main class="contenedor">
+
+
+        <!-- ================================================= -->
+        <!-- CABECERA -->
+        <!-- ================================================= -->
+
+        <header class="cabecera">
+
+            <div class="logo-pokeball">
+
+                <div class="pokeball">
+
+                    <div class="pokeball-centro"></div>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="eyebrow">
+                    POKÉMON // DATABASE
+                </div>
+
+                <h1>
+                    ESTRATEGIAS
+                    <span>POKÉMON</span>
+                </h1>
+
+                <p>
+                    Base de datos táctica · Explorador competitivo
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================================================= -->
+        <!-- BUSCADOR -->
+        <!-- ================================================= -->
+
+        <section class="buscador">
+
+            <div class="campo-busqueda">
+
+                <div class="icono-busqueda">
+                    ⌕
+                </div>
+
+                <input
+                    id="pokemonInput"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Buscar Pokémon...  Ej: Venusaur, 3, char..."
+                >
+
+                <button
+                    id="buscarBtn"
+                    type="button"
+                >
+                    BUSCAR
+                </button>
+
+            </div>
+
+
+            <div
+                id="resultadosBusqueda"
+                class="resultados-busqueda">
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- INFORMACIÓN -->
+        <!-- ================================================= -->
+
+        <section
+            id="pokemonInfo"
+            class="pokemon-info oculto"
+        >
+
+
+            <!-- línea decorativa -->
+
+            <div class="terminal-line">
+
+                <span>●</span>
+                TARGET ACQUIRED
+                <span class="terminal-right">
+                    ONLINE
+                </span>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- CABECERA POKÉMON -->
+            <!-- ================================================= -->
+
+            <div class="pokemon-cabecera">
+
+
+                <!-- SPRITE -->
+
+                <div class="sprite-panel">
+
+                    <div class="sprite-glow"></div>
+
+                    <div class="sprite-circulo">
+
+                        <img
+                            id="pokemonImagen"
+                            src=""
+                            alt=""
+                        >
+
+                    </div>
+
+
+                    <button
+                        id="shinyBtn"
+                        class="shiny-btn"
+                        type="button"
+                        title="Cambiar Pokémon normal / shiny"
+                    >
+
+                        <span class="estrella">
+                            ★
+                        </span>
+
+                        <span id="shinyTexto">
+                            SHINY
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- DATOS -->
+
+                <div class="pokemon-datos">
+
+                    <div
+                        id="pokemonNumero"
+                        class="pokemon-numero"
+                    >
+                    </div>
+
+
+                    <h2 id="pokemonNombre">
+                    </h2>
+
+
+                    <div
+                        id="pokemonTipos"
+                        class="pokemon-tipos"
+                    >
+                    </div>
+
+
+                    <div class="pokemon-status">
+
+                        <span>
+                            ● SISTEMA ACTIVO
+                        </span>
+
+                        <span>
+                            DEX DATA
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- ESTRATEGIAS -->
+            <!-- ================================================= -->
+
+            <section class="seccion-estrategias">
+
+
+                <button
+                    id="estrategiasBtn"
+                    class="boton-estrategias"
+                    type="button"
+                >
+
+                    <span class="estrategias-icono">
+                        ⚔
+                    </span>
+
+                    <span class="estrategias-texto">
+
+                        <strong>
+                            ESTRATEGIAS
+                        </strong>
+
+                        <small>
+                            Análisis competitivo
+                        </small>
+
+                    </span>
+
+                    <span
+                        id="flecha"
+                        class="flecha"
+                    >
+                        ▼
+                    </span>
+
+                </button>
+
+
+                <div
+                    id="estrategiasContenido"
+                    class="estrategias-contenido oculto"
+                >
+
+                    <div
+                        id="estado"
+                        class="estado"
+                    >
+                    </div>
+
+                    <div
+                        id="estrategiasLista"
+                    >
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- FOOTER -->
+        <!-- ================================================= -->
+
+        <footer>
+
+            <div class="footer-line"></div>
+
+            <p>
+                POKÉMON DATA SYSTEM
+            </p>
+
+            <span>
+                Datos proporcionados por PokéAPI
+            </span>
+
+        </footer>
+
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
