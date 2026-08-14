@@ -590,7 +590,7 @@ async function cargarEstrategias() {
     try {
 
         const url =
-            `${WORKER_URL}/api/estrategias/${pokemonSeleccionado.id}`;
+            `${WORKER_URL.replace(/\/+$/, "")}/api/estrategias/${pokemonSeleccionado.id}`;
 
 
         const respuesta =
