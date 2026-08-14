@@ -684,9 +684,35 @@ function crearEstrategia(
         "estrategia-titulo";
 
 
+    /*
+       Si el Worker encontró una generación,
+       usamos ese nombre.
+
+       Ejemplo:
+       Estrategia XY
+       Estrategia Sol / Luna
+    */
+
     titulo.textContent =
         estrategia.titulo ||
+        estrategia.generacion ||
         "Estrategia Pokémon";
+
+
+    /*
+       Si conocemos el ID,
+       mostramos también el código.
+    */
+
+    if (
+        estrategia.id &&
+        estrategia.generacion
+    ) {
+
+        titulo.title =
+            estrategia.id;
+
+    }
 
 
     const contenido =
