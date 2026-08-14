@@ -1,0 +1,468 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #111827;
+
+    color: #f3f4f6;
+
+}
+
+
+.contenedor {
+
+    width: min(1100px, 94%);
+
+    margin: 40px auto;
+
+}
+
+
+.cabecera {
+
+    text-align: center;
+
+    margin-bottom: 35px;
+
+}
+
+
+.cabecera h1 {
+
+    font-size: 36px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.cabecera p {
+
+    color: #9ca3af;
+
+}
+
+
+/* ============================= */
+/* BUSCADOR */
+/* ============================= */
+
+.buscador {
+
+    position: relative;
+
+    margin-bottom: 30px;
+
+}
+
+
+.campo-busqueda {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+#pokemonInput {
+
+    flex: 1;
+
+    padding: 15px 18px;
+
+    border-radius: 10px;
+
+    border: 1px solid #374151;
+
+    background: #1f2937;
+
+    color: white;
+
+    font-size: 18px;
+
+    outline: none;
+
+}
+
+
+#pokemonInput:focus {
+
+    border-color: #60a5fa;
+
+}
+
+
+#buscarBtn {
+
+    padding: 0 25px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+#buscarBtn:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+/* ============================= */
+/* RESULTADOS */
+/* ============================= */
+
+.resultados-busqueda {
+
+    position: absolute;
+
+    z-index: 100;
+
+    left: 0;
+
+    right: 0;
+
+    background: #1f2937;
+
+    border: 1px solid #374151;
+
+    border-radius: 10px;
+
+    margin-top: 5px;
+
+    overflow: hidden;
+
+}
+
+
+.resultado {
+
+    padding: 12px 16px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+
+.resultado:hover {
+
+    background: #374151;
+
+}
+
+
+.resultado-numero {
+
+    color: #9ca3af;
+
+}
+
+
+/* ============================= */
+/* POKÉMON */
+/* ============================= */
+
+.pokemon-info {
+
+    background: #1f2937;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    border: 1px solid #374151;
+
+}
+
+
+.pokemon-cabecera {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.pokemon-cabecera img {
+
+    width: 140px;
+
+    height: 140px;
+
+    object-fit: contain;
+
+}
+
+
+.pokemon-numero {
+
+    color: #9ca3af;
+
+    font-size: 18px;
+
+}
+
+
+#pokemonNombre {
+
+    font-size: 32px;
+
+    margin: 5px 0 15px;
+
+    text-transform: capitalize;
+
+}
+
+
+.pokemon-tipos {
+
+    display: flex;
+
+    gap: 8px;
+
+}
+
+
+.tipo {
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: #374151;
+
+    font-size: 14px;
+
+}
+
+
+/* ============================= */
+/* ESTRATEGIAS */
+/* ============================= */
+
+.boton-estrategias {
+
+    width: 100%;
+
+    padding: 17px 20px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background: #374151;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.boton-estrategias:hover {
+
+    background: #4b5563;
+
+}
+
+
+.estrategias-contenido {
+
+    margin-top: 15px;
+
+}
+
+
+#estado {
+
+    color: #9ca3af;
+
+    margin-bottom: 15px;
+
+}
+
+
+/* ============================= */
+/* TARJETAS DE ESTRATEGIA */
+/* ============================= */
+
+.estrategia {
+
+    background: #111827;
+
+    border: 1px solid #374151;
+
+    border-radius: 12px;
+
+    margin-bottom: 18px;
+
+    overflow: hidden;
+
+}
+
+
+.estrategia-titulo {
+
+    padding: 15px 18px;
+
+    background: #374151;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+}
+
+
+.estrategia-contenido {
+
+    padding: 20px;
+
+    line-height: 1.6;
+
+    overflow-x: auto;
+
+}
+
+
+.estrategia-contenido img {
+
+    max-width: 100%;
+
+}
+
+
+.estrategia-contenido table {
+
+    max-width: 100%;
+
+}
+
+
+.estrategia-contenido a {
+
+    color: #60a5fa;
+
+}
+
+
+.estrategia-contenido h1,
+.estrategia-contenido h2,
+.estrategia-contenido h3 {
+
+    color: #f3f4f6;
+
+}
+
+
+/* ============================= */
+/* UTILIDADES */
+/* ============================= */
+
+.oculto {
+
+    display: none;
+
+}
+
+
+/* ============================= */
+/* FOOTER */
+/* ============================= */
+
+footer {
+
+    text-align: center;
+
+    margin-top: 40px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+footer a {
+
+    color: #60a5fa;
+
+}
+
+
+/* ============================= */
+/* MÓVIL */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+    .campo-busqueda {
+
+        flex-direction: column;
+
+    }
+
+
+    #buscarBtn {
+
+        padding: 14px;
+
+    }
+
+
+    .pokemon-cabecera {
+
+        flex-direction: column;
+
+        text-align: center;
+
+    }
+
+
+    .pokemon-tipos {
+
+        justify-content: center;
+
+    }
+
+}
