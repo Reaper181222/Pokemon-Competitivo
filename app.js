@@ -95,6 +95,7 @@ const NOMBRES_TIPOS = {
 
 };
 
+
 /* =====================================================
    ELEMENTOS
    ===================================================== */
@@ -143,6 +144,9 @@ const shinyBtn =
 
 const shinyTexto =
     document.getElementById("shinyTexto");
+
+const gritoBtn =
+    document.getElementById("gritoBtn");
 
 
 /* =====================================================
@@ -937,6 +941,60 @@ function obtenerSpriteShinyPokemonDB(
 
 
 /* =====================================================
+   GRITO POKÉMON
+   ===================================================== */
+
+gritoBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            !pokemonSeleccionado
+        ) {
+
+            return;
+
+        }
+
+
+        sonido("click");
+
+
+        const id =
+            pokemonSeleccionado.id;
+
+
+        /*
+           Gritos de PokéAPI.
+        */
+
+        const grito =
+            new Audio(
+                `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`
+            );
+
+
+        grito.volume =
+            0.8;
+
+
+        grito.play()
+            .catch(
+                error => {
+
+                    console.log(
+                        "No se pudo reproducir el grito:",
+                        error
+                    );
+
+                }
+            );
+
+    }
+);
+
+
+/* =====================================================
    FALLBACK
    ===================================================== */
 
@@ -1387,6 +1445,260 @@ function crearEstrategia(
     estrategiasLista.appendChild(
         article
     );
+
+}
+
+
+/* =====================================================
+   LIMPIAR CONTENIDO DE POKÉXPERTO
+   ===================================================== */
+
+function limpiarContenidoPokexperto(
+    contenedor
+) {
+
+    /*
+       --------------------------------------------------
+       1. CONVERTIR ICONOS DE TIPOS
+       --------------------------------------------------
+    */
+
+    const imagenes =
+        Array.from(
+            contenedor.querySelectorAll("img")
+        );
+
+
+    imagenes.forEach(
+        img => {
+
+            const texto =
+                (
+                    img.alt ||
+                    img.title ||
+                    img.getAttribute("data-tooltip") ||
+                    ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            /*
+               Buscamos si la imagen representa
+               un tipo Pokémon.
+            */
+
+            const tipo =
+                detectarTipo(
+                    texto,
+                    img.src
+                );
+
+
+            if (tipo) {
+
+                const span =
+                    crearTipoEstrategia(
+                        tipo
+                    );
+
+
+                img.replaceWith(
+                    span
+                );
+
+                return;
+
+            }
+
+
+            /*
+               ------------------------------------------------
+               Imágenes normales
+               ------------------------------------------------
+
+               Las dejamos, pero quitamos tamaños
+               absurdos que pueda traer Pokéxperto.
+            */
+
+            img.removeAttribute(
+                "width"
+            );
+
+            img.removeAttribute(
+                "height"
+            );
+
+
+            img.style.maxWidth =
+                "100%";
+
+            img.style.height =
+                "auto";
+
+        }
+    );
+
+
+    /*
+       --------------------------------------------------
+       2. LIMPIAR ESTILOS INLINE
+       --------------------------------------------------
+    */
+
+    contenedor
+        .querySelectorAll(
+            "[style]"
+        )
+        .forEach(
+            elemento => {
+
+                elemento.style.maxWidth =
+                    "100%";
+
+                elemento.style.boxSizing =
+                    "border-box";
+
+            }
+        );
+
+
+    /*
+       --------------------------------------------------
+       3. TABLAS
+       --------------------------------------------------
+    */
+
+    contenedor
+        .querySelectorAll("table")
+        .forEach(
+            tabla => {
+
+                tabla.removeAttribute(
+                    "width"
+                );
+
+
+                tabla.style.maxWidth =
+                    "100%";
+
+            }
+        );
+
+
+    /*
+       --------------------------------------------------
+       4. LINKS
+       --------------------------------------------------
+    */
+
+    contenedor
+        .querySelectorAll("a")
+        .forEach(
+            enlace => {
+
+                enlace.target =
+                    "_blank";
+
+                enlace.rel =
+                    "noopener noreferrer";
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   DETECTAR TIPO
+   ===================================================== */
+
+function detectarTipo(
+    texto,
+    src
+) {
+
+    const datos =
+        `${texto} ${src}`.toLowerCase();
+
+
+    const tipos =
+        Object.keys(
+            COLORES_TIPOS
+        );
+
+
+    for (
+        const tipo of tipos
+    ) {
+
+        /*
+           Buscamos palabras como:
+
+           planta
+           fire
+           fuego
+           tipo-planta
+           type/grass
+           etc.
+        */
+
+        const español =
+            NOMBRES_TIPOS[tipo]
+                ?.toLowerCase();
+
+
+        if (
+            datos.includes(tipo) ||
+            (
+                español &&
+                datos.includes(español)
+            )
+        ) {
+
+            return tipo;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   CREAR TIPO PARA ESTRATEGIA
+   ===================================================== */
+
+function crearTipoEstrategia(
+    tipo
+) {
+
+    const span =
+        document.createElement(
+            "span"
+        );
+
+
+    span.className =
+        "estrategia-tipo";
+
+
+    span.textContent =
+        NOMBRES_TIPOS[tipo] ||
+        capitalizar(tipo);
+
+
+    span.style.setProperty(
+        "--tipo-color",
+        COLORES_TIPOS[tipo] ||
+        "#64748b"
+    );
+
+
+    return span;
 
 }
 
