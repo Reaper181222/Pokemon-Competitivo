@@ -1354,8 +1354,24 @@ function crearEstrategia(
         "estrategia-contenido";
 
 
+    /*
+       Insertamos el HTML que viene
+       del Worker.
+    */
+
     contenido.innerHTML =
-        estrategia.html;
+        estrategia.html || "";
+
+
+    /*
+       ==============================================
+       LIMPIAR HTML DE POKÉXPERTO
+       ==============================================
+    */
+
+    limpiarContenidoPokexperto(
+        contenido
+    );
 
 
     article.appendChild(
