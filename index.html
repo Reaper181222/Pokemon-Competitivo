@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Estrategias Pokémon</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <header class="cabecera">
+
+            <h1>⚡ Estrategias Pokémon</h1>
+
+            <p>
+                Buscá un Pokémon por nombre o número
+            </p>
+
+        </header>
+
+
+        <!-- BUSCADOR -->
+
+        <section class="buscador">
+
+            <div class="campo-busqueda">
+
+                <input
+                    id="pokemonInput"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Ej: Venusaur, 3, char..."
+                >
+
+                <button id="buscarBtn">
+                    Buscar
+                </button>
+
+            </div>
+
+
+            <div
+                id="resultadosBusqueda"
+                class="resultados-busqueda">
+            </div>
+
+        </section>
+
+
+        <!-- INFORMACIÓN DEL POKÉMON -->
+
+        <section
+            id="pokemonInfo"
+            class="pokemon-info oculto">
+
+            <div class="pokemon-cabecera">
+
+                <img
+                    id="pokemonImagen"
+                    src=""
+                    alt="">
+
+                <div>
+
+                    <div
+                        id="pokemonNumero"
+                        class="pokemon-numero">
+                    </div>
+
+                    <h2 id="pokemonNombre"></h2>
+
+                    <div
+                        id="pokemonTipos"
+                        class="pokemon-tipos">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ESTRATEGIAS -->
+
+            <section class="seccion-estrategias">
+
+                <button
+                    id="estrategiasBtn"
+                    class="boton-estrategias">
+
+                    <span>
+                        Estrategias Pokémon
+                    </span>
+
+                    <span id="flecha">
+                        ▼
+                    </span>
+
+                </button>
+
+
+                <div
+                    id="estrategiasContenido"
+                    class="estrategias-contenido oculto">
+
+                    <div id="estado"></div>
+
+                    <div id="estrategiasLista"></div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <footer>
+
+            <p>
+                Información Pokémon:
+                <a
+                    href="https://pokeapi.co/"
+                    target="_blank">
+                    PokéAPI
+                </a>
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
