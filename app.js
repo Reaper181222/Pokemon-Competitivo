@@ -2,22 +2,68 @@
    CONFIGURACIÓN
    ===================================================== */
 
-
-/*
-   PONÉ ACÁ LA URL DE TU CLOUDFLARE WORKER.
-
-   Ejemplo:
-
-   https://pokemon-estrategias.usuario.workers.dev
-
-*/
-
 const WORKER_URL =
-    "https://dexterm-proxy.reaperfichasotros.workers.dev/";
+    "https://dexterm-proxy.reaperfichasotros.workers.dev";
 
 
 /* =====================================================
-   ELEMENTOS HTML
+   COLORES / TIPOS
+   ===================================================== */
+
+const COLORES_TIPO = {
+
+    normal: ["#9fa0a6", "#d7d8dc"],
+    fuego: ["#ff512f", "#f09819"],
+    agua: ["#2196f3", "#21cbf3"],
+    planta: ["#43a047", "#8bc34a"],
+    electrico: ["#f7b733", "#fcff00"],
+    hielo: ["#36d1dc", "#5b86e5"],
+    lucha: ["#d32f2f", "#ff7043"],
+    veneno: ["#8e44ad", "#c039a8"],
+    tierra: ["#a97945", "#d4a574"],
+    volador: ["#667eea", "#a8c0ff"],
+    psiquico: ["#ec407a", "#f06292"],
+    bicho: ["#689f38", "#aed581"],
+    roca: ["#795548", "#a1887f"],
+    fantasma: ["#4527a0", "#7e57c2"],
+    dragon: ["#3949ab", "#7986cb"],
+    oscuro: ["#212121", "#616161"],
+    acero: ["#607d8b", "#90a4ae"],
+    hada: ["#ec77ab", "#f3a4d5"]
+
+};
+
+
+/* =====================================================
+   TIPOS EN ESPAÑOL
+   ===================================================== */
+
+const TIPOS_ES = {
+
+    normal: "Normal",
+    fire: "Fuego",
+    water: "Agua",
+    grass: "Planta",
+    electric: "Eléctrico",
+    ice: "Hielo",
+    fighting: "Lucha",
+    poison: "Veneno",
+    ground: "Tierra",
+    flying: "Volador",
+    psychic: "Psíquico",
+    bug: "Bicho",
+    rock: "Roca",
+    ghost: "Fantasma",
+    dragon: "Dragón",
+    dark: "Siniestro",
+    steel: "Acero",
+    fairy: "Hada"
+
+};
+
+
+/* =====================================================
+   ELEMENTOS
    ===================================================== */
 
 const input =
@@ -68,9 +114,80 @@ let listaPokemon = [];
 
 let pokemonSeleccionado = null;
 
+let pokemonActualDatos = null;
+
+let shinyActivo = false;
+
 
 /* =====================================================
-   CARGAR POKÉMON DESDE POKÉAPI
+   AGREGAR BOTÓN SHINY
+   ===================================================== */
+
+const controlesPokemon =
+    document.createElement("div");
+
+controlesPokemon.className =
+    "controles-pokemon";
+
+const shinyBtn =
+    document.createElement("button");
+
+shinyBtn.className =
+    "boton-icono";
+
+shinyBtn.innerHTML =
+    "⭐ <span>Shiny</span>";
+
+shinyBtn.title =
+    "Cambiar a versión Shiny";
+
+shinyBtn.addEventListener(
+    "click",
+    cambiarShiny
+);
+
+controlesPokemon.appendChild(
+    shinyBtn
+);
+
+
+/* =====================================================
+   BOTÓN GRITO
+   ===================================================== */
+
+const gritoBtn =
+    document.createElement("button");
+
+gritoBtn.className =
+    "boton-icono";
+
+gritoBtn.innerHTML =
+    "🔊 <span>Grito</span>";
+
+gritoBtn.title =
+    "Escuchar grito del Pokémon";
+
+gritoBtn.addEventListener(
+    "click",
+    reproducirGrito
+);
+
+controlesPokemon.appendChild(
+    gritoBtn
+);
+
+
+/*
+   Lo ponemos debajo de los tipos.
+*/
+
+pokemonTipos.parentElement.appendChild(
+    controlesPokemon
+);
+
+
+/* =====================================================
+   CARGAR LISTA
    ===================================================== */
 
 async function cargarListaPokemon() {
@@ -84,7 +201,6 @@ async function cargarListaPokemon() {
                 "https://pokeapi.co/api/v2/pokemon?limit=2000"
             );
 
-
         if (!respuesta.ok) {
 
             throw new Error(
@@ -93,41 +209,28 @@ async function cargarListaPokemon() {
 
         }
 
-
         const datos =
             await respuesta.json();
 
-
         listaPokemon =
             datos.results.map(
-                (pokemon, index) => {
+                (pokemon, index) => ({
 
-                    return {
+                    id:
+                        index + 1,
 
-                        id: index + 1,
+                    nombre:
+                        pokemon.name,
 
-                        nombre:
-                            pokemon.name,
+                    url:
+                        pokemon.url
 
-                        url:
-                            pokemon.url
-
-                    };
-
-                }
+                })
             );
-
-
-        console.log(
-            "Pokémon cargados:",
-            listaPokemon.length
-        );
-
 
     } catch (error) {
 
         console.error(
-            "Error cargando PokéAPI:",
             error
         );
 
@@ -145,12 +248,10 @@ input.addEventListener(
     buscarPokemon
 );
 
-
 buscarBtn.addEventListener(
     "click",
     ejecutarBusqueda
 );
-
 
 input.addEventListener(
     "keydown",
@@ -169,7 +270,7 @@ input.addEventListener(
 
 
 /* =====================================================
-   BÚSQUEDA EN TIEMPO REAL
+   BÚSQUEDA
    ===================================================== */
 
 function buscarPokemon() {
@@ -179,31 +280,21 @@ function buscarPokemon() {
             .trim()
             .toLowerCase();
 
-
     if (!texto) {
 
-        resultados.innerHTML = "";
+        resultados.innerHTML =
+            "";
 
         return;
 
     }
 
-
     let encontrados = [];
-
-
-    /*
-       Si escribe un número:
-       3
-       #3
-       003
-    */
 
     const numero =
         parseInt(
             texto.replace("#", "")
         );
-
 
     if (!isNaN(numero)) {
 
@@ -213,9 +304,7 @@ function buscarPokemon() {
                     pokemon.id === numero
             );
 
-    }
-
-    else {
+    } else {
 
         encontrados =
             listaPokemon.filter(
@@ -226,13 +315,8 @@ function buscarPokemon() {
 
     }
 
-
-    encontrados =
-        encontrados.slice(0, 10);
-
-
     mostrarResultados(
-        encontrados
+        encontrados.slice(0, 10)
     );
 
 }
@@ -249,61 +333,44 @@ function ejecutarBusqueda() {
             .trim()
             .toLowerCase();
 
-
     if (!texto) {
-
         return;
-
     }
-
 
     const numero =
         parseInt(
             texto.replace("#", "")
         );
 
-
     let pokemon;
-
 
     if (!isNaN(numero)) {
 
         pokemon =
             listaPokemon.find(
-                p => p.id === numero
+                p =>
+                    p.id === numero
             );
 
-    }
-
-    else {
+    } else {
 
         pokemon =
             listaPokemon.find(
-                p => p.nombre === texto
+                p =>
+                    p.nombre === texto
             );
 
     }
 
-
-    /*
-       Si no encuentra coincidencia exacta,
-       toma el primer resultado.
-    */
-
     if (!pokemon) {
 
-        const resultadosEncontrados =
-            listaPokemon.filter(
+        pokemon =
+            listaPokemon.find(
                 p =>
                     p.nombre.includes(texto)
             );
 
-
-        pokemon =
-            resultadosEncontrados[0];
-
     }
-
 
     if (pokemon) {
 
@@ -317,19 +384,17 @@ function ejecutarBusqueda() {
 
 
 /* =====================================================
-   MOSTRAR RESULTADOS
+   RESULTADOS
    ===================================================== */
 
 function mostrarResultados(
     pokemons
 ) {
 
-    resultados.innerHTML = "";
+    resultados.innerHTML =
+        "";
 
-
-    if (
-        pokemons.length === 0
-    ) {
+    if (!pokemons.length) {
 
         resultados.innerHTML = `
             <div class="resultado">
@@ -341,7 +406,6 @@ function mostrarResultados(
 
     }
 
-
     pokemons.forEach(
         pokemon => {
 
@@ -350,10 +414,8 @@ function mostrarResultados(
                     "div"
                 );
 
-
             div.className =
                 "resultado";
-
 
             div.innerHTML = `
 
@@ -364,15 +426,12 @@ function mostrarResultados(
                 </span>
 
                 <span class="resultado-numero">
-
                     #${String(
                         pokemon.id
                     ).padStart(3, "0")}
-
                 </span>
 
             `;
-
 
             div.addEventListener(
                 "click",
@@ -381,7 +440,6 @@ function mostrarResultados(
                         pokemon
                     )
             );
-
 
             resultados.appendChild(
                 div
@@ -404,45 +462,32 @@ async function seleccionarPokemon(
     pokemonSeleccionado =
         pokemon;
 
+    shinyActivo =
+        false;
 
     input.value =
         capitalizar(
             pokemon.nombre
         );
 
-
     resultados.innerHTML =
         "";
-
 
     pokemonInfo.classList.remove(
         "oculto"
     );
-
 
     pokemonNombre.textContent =
         capitalizar(
             pokemon.nombre
         );
 
-
     pokemonNumero.textContent =
         `#${String(
             pokemon.id
         ).padStart(3, "0")}`;
 
-
-    pokemonImagen.src =
-        `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
-
-
-    pokemonImagen.alt =
-        pokemon.nombre;
-
-
-    /*
-       Obtener tipos
-    */
+    cargarSprite();
 
     try {
 
@@ -451,41 +496,15 @@ async function seleccionarPokemon(
                 `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`
             );
 
-
         const datos =
             await respuesta.json();
 
+        pokemonActualDatos =
+            datos;
 
-        pokemonTipos.innerHTML =
-            "";
-
-
-        datos.types.forEach(
-            tipo => {
-
-                const span =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                span.className =
-                    "tipo";
-
-
-                span.textContent =
-                    capitalizar(
-                        tipo.type.name
-                    );
-
-
-                pokemonTipos.appendChild(
-                    span
-                );
-
-            }
+        mostrarTipos(
+            datos.types
         );
-
 
     } catch (error) {
 
@@ -495,23 +514,15 @@ async function seleccionarPokemon(
 
     }
 
-
-    /*
-       Limpiar estrategias
-    */
-
     estrategiasLista.innerHTML =
         "";
-
 
     estado.textContent =
         "Abrí «Estrategias Pokémon» para cargarlas.";
 
-
     estrategiasContenido.classList.add(
         "oculto"
     );
-
 
     flecha.textContent =
         "▼";
@@ -520,7 +531,329 @@ async function seleccionarPokemon(
 
 
 /* =====================================================
-   BOTÓN ESTRATEGIAS
+   SPRITE
+   ===================================================== */
+
+function cargarSprite() {
+
+    if (!pokemonSeleccionado) {
+        return;
+    }
+
+    const id =
+        pokemonSeleccionado.id;
+
+    let generacion;
+
+    if (id <= 151) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 251) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 386) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 493) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 649) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 721) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 809) {
+
+        generacion = "sun-moon";
+
+    } else if (id <= 905) {
+
+        generacion = "sword-shield";
+
+    } else {
+
+        generacion = "scarlet-violet";
+
+    }
+
+    const nombre =
+        pokemonSeleccionado.nombre;
+
+    const shiny =
+        shinyActivo
+            ? "shiny/"
+            : "";
+
+    const sprite =
+        `https://img.pokemondb.net/sprites/${generacion}/${shiny}normal/${nombre}.png`;
+
+    pokemonImagen.src =
+        sprite;
+
+    pokemonImagen.alt =
+        nombre;
+
+    pokemonImagen.onerror =
+        () => {
+
+            pokemonImagen.onerror =
+                null;
+
+            /*
+               Fallback PokéAPI
+            */
+
+            const fallback =
+                shinyActivo
+                    ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`
+                    : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+            pokemonImagen.src =
+                fallback;
+
+        };
+
+}
+
+
+/* =====================================================
+   SHINY
+   ===================================================== */
+
+function cambiarShiny() {
+
+    shinyActivo =
+        !shinyActivo;
+
+    cargarSprite();
+
+    shinyBtn.classList.toggle(
+        "activo",
+        shinyActivo
+    );
+
+}
+
+
+/* =====================================================
+   TIPOS
+   ===================================================== */
+
+function mostrarTipos(
+    tipos
+) {
+
+    pokemonTipos.innerHTML =
+        "";
+
+    tipos.forEach(
+        tipo => {
+
+            const nombreOriginal =
+                tipo.type.name;
+
+            const nombreES =
+                TIPOS_ES[
+                    nombreOriginal
+                ] ||
+                capitalizar(
+                    nombreOriginal
+                );
+
+            const tipoNormalizado =
+                nombreOriginal
+                    .replace(
+                        "dark",
+                        "oscuro"
+                    )
+                    .replace(
+                        "fire",
+                        "fuego"
+                    )
+                    .replace(
+                        "water",
+                        "agua"
+                    )
+                    .replace(
+                        "grass",
+                        "planta"
+                    )
+                    .replace(
+                        "electric",
+                        "electrico"
+                    )
+                    .replace(
+                        "ice",
+                        "hielo"
+                    )
+                    .replace(
+                        "fighting",
+                        "lucha"
+                    )
+                    .replace(
+                        "poison",
+                        "veneno"
+                    )
+                    .replace(
+                        "ground",
+                        "tierra"
+                    )
+                    .replace(
+                        "flying",
+                        "volador"
+                    )
+                    .replace(
+                        "psychic",
+                        "psiquico"
+                    )
+                    .replace(
+                        "bug",
+                        "bicho"
+                    )
+                    .replace(
+                        "rock",
+                        "roca"
+                    )
+                    .replace(
+                        "ghost",
+                        "fantasma"
+                    )
+                    .replace(
+                        "dragon",
+                        "dragon"
+                    )
+                    .replace(
+                        "steel",
+                        "acero"
+                    )
+                    .replace(
+                        "fairy",
+                        "hada"
+                    )
+                    .replace(
+                        "normal",
+                        "normal"
+                    );
+
+            const colores =
+                COLORES_TIPO[
+                    tipoNormalizado
+                ] ||
+                ["#555", "#888"];
+
+            const span =
+                document.createElement(
+                    "span"
+                );
+
+            span.className =
+                "tipo";
+
+            span.textContent =
+                nombreES;
+
+            span.style.setProperty(
+                "--tipo1",
+                colores[0]
+            );
+
+            span.style.setProperty(
+                "--tipo2",
+                colores[1]
+            );
+
+            pokemonTipos.appendChild(
+                span
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   GRITO
+   ===================================================== */
+
+function reproducirGrito() {
+
+    if (!pokemonSeleccionado) {
+        return;
+    }
+
+    const id =
+        pokemonSeleccionado.id;
+
+    /*
+       Primero intentamos el grito moderno
+       de PokeAPI.
+    */
+
+    const urls = [
+
+        `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`,
+
+        `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/legacy/${id}.ogg`
+
+    ];
+
+    reproducirAudio(
+        urls,
+        0
+    );
+
+}
+
+
+function reproducirAudio(
+    urls,
+    indice
+) {
+
+    if (
+        indice >= urls.length
+    ) {
+
+        console.warn(
+            "No se encontró el grito."
+        );
+
+        return;
+
+    }
+
+    const audio =
+        new Audio(
+            urls[indice]
+        );
+
+    audio.volume =
+        0.8;
+
+    audio.play().catch(
+        () => {
+
+            reproducirAudio(
+                urls,
+                indice + 1
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESTRATEGIAS
    ===================================================== */
 
 estrategiasBtn.addEventListener(
@@ -532,28 +865,22 @@ estrategiasBtn.addEventListener(
                 .classList
                 .contains("oculto");
 
-
         if (oculto) {
 
             estrategiasContenido
                 .classList
                 .remove("oculto");
 
-
             flecha.textContent =
                 "▲";
 
-
             await cargarEstrategias();
 
-        }
-
-        else {
+        } else {
 
             estrategiasContenido
                 .classList
                 .add("oculto");
-
 
             flecha.textContent =
                 "▼";
@@ -565,43 +892,31 @@ estrategiasBtn.addEventListener(
 
 
 /* =====================================================
-   CONSULTAR WORKER
+   CARGAR ESTRATEGIAS
    ===================================================== */
 
 async function cargarEstrategias() {
 
-    if (
-        !pokemonSeleccionado
-    ) {
-
+    if (!pokemonSeleccionado) {
         return;
-
     }
-
 
     estrategiasLista.innerHTML =
         "";
 
-
     estado.textContent =
         "⏳ Consultando estrategias...";
-
 
     try {
 
         const url =
-            `${WORKER_URL.replace(/\/+$/, "")}/api/estrategias/${pokemonSeleccionado.id}`;
-
+            `${WORKER_URL}/api/estrategias/${pokemonSeleccionado.id}`;
 
         const respuesta =
-            await fetch(
-                url
-            );
-
+            await fetch(url);
 
         const datos =
             await respuesta.json();
-
 
         if (!respuesta.ok) {
 
@@ -612,14 +927,12 @@ async function cargarEstrategias() {
 
         }
 
-
         estado.textContent =
             "";
 
-
         if (
             !datos.estrategias ||
-            datos.estrategias.length === 0
+            !datos.estrategias.length
         ) {
 
             estado.textContent =
@@ -628,7 +941,6 @@ async function cargarEstrategias() {
             return;
 
         }
-
 
         datos.estrategias.forEach(
             estrategia => {
@@ -640,13 +952,11 @@ async function cargarEstrategias() {
             }
         );
 
-
     } catch (error) {
 
         console.error(
             error
         );
-
 
         estado.textContent =
             "❌ No se pudieron obtener las estrategias.";
@@ -669,75 +979,39 @@ function crearEstrategia(
             "article"
         );
 
-
     article.className =
         "estrategia";
-
 
     const titulo =
         document.createElement(
             "div"
         );
 
-
     titulo.className =
         "estrategia-titulo";
 
-
-    /*
-       Si el Worker encontró una generación,
-       usamos ese nombre.
-
-       Ejemplo:
-       Estrategia XY
-       Estrategia Sol / Luna
-    */
-
     titulo.textContent =
         estrategia.titulo ||
-        estrategia.generacion ||
         "Estrategia Pokémon";
-
-
-    /*
-       Si conocemos el ID,
-       mostramos también el código.
-    */
-
-    if (
-        estrategia.id &&
-        estrategia.generacion
-    ) {
-
-        titulo.title =
-            estrategia.id;
-
-    }
-
 
     const contenido =
         document.createElement(
             "div"
         );
 
-
     contenido.className =
         "estrategia-contenido";
 
-
     contenido.innerHTML =
         estrategia.html;
-
 
     article.appendChild(
         titulo
     );
 
-
     article.appendChild(
         contenido
     );
-
 
     estrategiasLista.appendChild(
         article
@@ -755,11 +1029,8 @@ function capitalizar(
 ) {
 
     if (!texto) {
-
         return "";
-
     }
-
 
     return (
         texto.charAt(0).toUpperCase() +
@@ -768,10 +1039,6 @@ function capitalizar(
 
 }
 
-
-/* =====================================================
-   ESTADO INICIAL
-   ===================================================== */
 
 function estadoInicial() {
 
@@ -782,7 +1049,7 @@ function estadoInicial() {
 
 
 /* =====================================================
-   ARRANCAR
+   INICIO
    ===================================================== */
 
 cargarListaPokemon();
