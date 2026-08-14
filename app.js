@@ -1483,6 +1483,33 @@ function limpiarContenidoPokexperto(
                 .toLowerCase();
 
 
+                   /*
+           Detectar categoría del ataque
+        */
+
+        const categoria =
+            detectarCategoriaAtaque(
+                texto,
+                img.src
+            );
+
+
+        if (categoria) {
+
+            const icono =
+                crearCategoriaAtaque(
+                    categoria
+                );
+
+
+            img.replaceWith(
+                icono
+            );
+
+            return;
+
+        }
+
             /*
                Buscamos si la imagen representa
                un tipo Pokémon.
@@ -1621,42 +1648,66 @@ function detectarTipo(
     const datos =
         `${texto} ${src}`.toLowerCase();
 
+    const equivalencias = {
 
-    const tipos =
-        Object.keys(
-            COLORES_TIPOS
-        );
+        normal: ["normal"],
+
+        fire: ["fire", "fuego"],
+
+        water: ["water", "agua"],
+
+        electric: ["electric", "electrico", "eléctrico"],
+
+        grass: ["grass", "planta"],
+
+        ice: ["ice", "hielo"],
+
+        fighting: ["fighting", "lucha"],
+
+        poison: ["poison", "veneno"],
+
+        ground: ["ground", "tierra"],
+
+        flying: ["flying", "volador"],
+
+        psychic: [
+            "psychic",
+            "psiquico",
+            "psíquico"
+        ],
+
+        bug: ["bug", "bicho"],
+
+        rock: ["rock", "roca"],
+
+        ghost: ["ghost", "fantasma"],
+
+        dragon: ["dragon", "dragón"],
+
+        dark: ["dark", "siniestro"],
+
+        steel: ["steel", "acero"],
+
+        fairy: ["fairy", "hada"]
+
+    };
 
 
     for (
-        const tipo of tipos
+        const tipo of Object.keys(equivalencias)
     ) {
 
-        /*
-           Buscamos palabras como:
-
-           planta
-           fire
-           fuego
-           tipo-planta
-           type/grass
-           etc.
-        */
-
-        const español =
-            NOMBRES_TIPOS[tipo]
-                ?.toLowerCase();
-
-
-        if (
-            datos.includes(tipo) ||
-            (
-                español &&
-                datos.includes(español)
-            )
+        for (
+            const palabra of equivalencias[tipo]
         ) {
 
-            return tipo;
+            if (
+                datos.includes(palabra)
+            ) {
+
+                return tipo;
+
+            }
 
         }
 
@@ -1699,6 +1750,133 @@ function crearTipoEstrategia(
 
 
     return span;
+
+}
+
+
+/* =====================================================
+   ICONOS DE CATEGORÍA DE ATAQUE
+   ===================================================== */
+
+function detectarCategoriaAtaque(
+    texto,
+    src
+) {
+
+    const datos =
+        `${texto} ${src}`.toLowerCase();
+
+
+    if (
+        datos.includes("fisico") ||
+        datos.includes("físico") ||
+        datos.includes("physical")
+    ) {
+
+        return "fisico";
+
+    }
+
+
+    if (
+        datos.includes("especial") ||
+        datos.includes("special")
+    ) {
+
+        return "especial";
+
+    }
+
+
+    if (
+        datos.includes("estado") ||
+        datos.includes("status")
+    ) {
+
+        return "estado";
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   CREAR ICONO DE CATEGORÍA
+   ===================================================== */
+
+function crearCategoriaAtaque(
+    categoria
+) {
+
+    const div =
+        document.createElement("span");
+
+
+    div.className =
+        `ataque-categoria ataque-${categoria}`;
+
+
+    if (categoria === "fisico") {
+
+        div.innerHTML = `
+
+            <span class="ataque-explosion">
+                ✦
+            </span>
+
+            <span class="ataque-nombre">
+                FÍSICO
+            </span>
+
+        `;
+
+    }
+
+
+    if (categoria === "especial") {
+
+        div.innerHTML = `
+
+            <span class="ataque-espiral">
+                ◉
+            </span>
+
+            <span class="ataque-nombre">
+                ESPECIAL
+            </span>
+
+        `;
+
+    }
+
+
+    if (categoria === "estado") {
+
+        div.innerHTML = `
+
+            <span class="ataque-particulas">
+
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+
+            </span>
+
+            <span class="ataque-nombre">
+                ESTADO
+            </span>
+
+        `;
+
+    }
+
+
+    return div;
 
 }
 
