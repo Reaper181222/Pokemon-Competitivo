@@ -1242,87 +1242,92 @@ function cambiarSprite(
    TIPOS
    ===================================================== */
 
-function mostrarTipos(
-    tipos
-) {
+function mostrarTipos(tipos) {
 
     pokemonTipos.innerHTML = "";
 
-    tipos.forEach(
-        tipo => {
+    tipos.forEach(tipo => {
 
-            const nombre =
-                tipo.type.name;
+        const nombre = tipo.type.name;
 
-            const span =
-                document.createElement(
-                    "span"
-                );
+        const nombreTipo =
+            NOMBRES_TIPOS[nombre] ||
+            capitalizar(nombre);
 
-            span.className =
-                "tipo";
-
-            const nombreTipo =
-                NOMBRES_TIPOS[nombre] ||
-                capitalizar(nombre);
-
-            const color =
-                COLORES_TIPOS[nombre] ||
-                "#64748b";
-
-            span.style.setProperty(
-                "--tipo-color",
-                color
-            );
+        const color =
+            COLORES_TIPOS[nombre] ||
+            "#64748b";
 
 
-            /* ICONO SVG */
+        /* =========================================
+           CONTENEDOR DEL TIPO
+           ========================================= */
 
-            const icono =
-                document.createElement(
-                    "img"
-                );
+        const contenedor =
+            document.createElement("div");
 
-            icono.src =
-                ICONOS_TIPOS[nombre] ||
-                "";
+        contenedor.className =
+            "tipo-principal";
 
-            icono.alt =
-                nombreTipo;
-
-            icono.className =
-                "tipo-icono";
+        contenedor.style.setProperty(
+            "--tipo-color",
+            color
+        );
 
 
-            /* NOMBRE */
+        /* =========================================
+           CUADRADO DEL SVG
+           ========================================= */
 
-            const texto =
-                document.createElement(
-                    "span"
-                );
+        const cuadro =
+            document.createElement("span");
 
-            texto.textContent =
-                nombreTipo;
-
-
-            span.appendChild(
-                icono
-            );
-
-            span.appendChild(
-                texto
-            );
+        cuadro.className =
+            "tipo-principal-icono";
 
 
-            pokemonTipos.appendChild(
-                span
-            );
+        const icono =
+            document.createElement("img");
 
-        }
-    );
+        icono.src =
+            ICONOS_TIPOS[nombre] || "";
+
+        icono.alt =
+            nombreTipo;
+
+        icono.className =
+            "tipo-icono-principal";
+
+
+        cuadro.appendChild(icono);
+
+
+        /* =========================================
+           NOMBRE DEL TIPO
+           ========================================= */
+
+        const texto =
+            document.createElement("span");
+
+        texto.className =
+    	    "tipo-principal-nombre efecto-tipo";
+
+        texto.textContent =
+            nombreTipo;
+
+
+        contenedor.appendChild(cuadro);
+
+        contenedor.appendChild(texto);
+
+
+        pokemonTipos.appendChild(
+            contenedor
+        );
+
+    });
 
 }
-
 
 /* =====================================================
    BOTON ESTRATEGIAS
