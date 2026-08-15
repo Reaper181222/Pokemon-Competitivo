@@ -2417,9 +2417,9 @@ img:not(.px-tipo-icon) {
 }
 
 
-/* =========================================================
-   ICONOS SVG DE TIPOS
-   ========================================================= */
+/* =====================================================
+   ICONOS SVG DE LOS TIPOS DEL POKEMON
+   ===================================================== */
 
 .tipo {
 
@@ -2427,14 +2427,22 @@ img:not(.px-tipo-icon) {
 
     align-items: center;
 
-    gap: 9px;
+    gap: 7px;
 
-    min-height: 39px;
+}
 
-    padding:
-        7px 13px 7px 9px;
 
-    isolation: isolate;
+.tipo-icono {
+
+    width: 20px !important;
+
+    height: 20px !important;
+
+    max-width: none !important;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
 
 }
 
