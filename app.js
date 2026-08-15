@@ -1767,6 +1767,27 @@ function detectarCategoriaAtaque(
         `${texto} ${src}`.toLowerCase();
 
 
+    /* =========================================
+       ESTADO
+       Pokéxperto usa otros.png
+       ========================================= */
+
+    if (
+        datos.includes("/otros.png") ||
+        datos.includes("otros.png") ||
+        datos.includes("estado") ||
+        datos.includes("status")
+    ) {
+
+        return "estado";
+
+    }
+
+
+    /* =========================================
+       FÍSICO
+       ========================================= */
+
     if (
         datos.includes("fisico") ||
         datos.includes("físico") ||
@@ -1778,22 +1799,16 @@ function detectarCategoriaAtaque(
     }
 
 
+    /* =========================================
+       ESPECIAL
+       ========================================= */
+
     if (
         datos.includes("especial") ||
         datos.includes("special")
     ) {
 
         return "especial";
-
-    }
-
-
-    if (
-        datos.includes("estado") ||
-        datos.includes("status")
-    ) {
-
-        return "estado";
 
     }
 
@@ -1824,11 +1839,7 @@ function crearCategoriaAtaque(
         div.innerHTML = `
 
             <span class="ataque-explosion">
-                ✦
-            </span>
-
-            <span class="ataque-nombre">
-                FÍSICO
+                ✹
             </span>
 
         `;
@@ -1841,11 +1852,7 @@ function crearCategoriaAtaque(
         div.innerHTML = `
 
             <span class="ataque-espiral">
-                ◉
-            </span>
-
-            <span class="ataque-nombre">
-                ESPECIAL
+                ∿
             </span>
 
         `;
@@ -1864,11 +1871,9 @@ function crearCategoriaAtaque(
                 <i></i>
                 <i></i>
                 <i></i>
+                <i></i>
+                <i></i>
 
-            </span>
-
-            <span class="ataque-nombre">
-                ESTADO
             </span>
 
         `;
