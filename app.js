@@ -1262,7 +1262,7 @@ function mostrarTipos(
             span.className =
                 "tipo";
 
-            span.textContent =
+            const nombreTipo =
                 NOMBRES_TIPOS[nombre] ||
                 capitalizar(nombre);
 
@@ -1274,6 +1274,45 @@ function mostrarTipos(
                 "--tipo-color",
                 color
             );
+
+
+            /* ICONO SVG */
+
+            const icono =
+                document.createElement(
+                    "img"
+                );
+
+            icono.src =
+                ICONOS_TIPOS[nombre] ||
+                "";
+
+            icono.alt =
+                nombreTipo;
+
+            icono.className =
+                "tipo-icono";
+
+
+            /* NOMBRE */
+
+            const texto =
+                document.createElement(
+                    "span"
+                );
+
+            texto.textContent =
+                nombreTipo;
+
+
+            span.appendChild(
+                icono
+            );
+
+            span.appendChild(
+                texto
+            );
+
 
             pokemonTipos.appendChild(
                 span
