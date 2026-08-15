@@ -2415,3 +2415,164 @@ img:not(.px-tipo-icon) {
     }
 
 }
+
+
+/* =========================================================
+   ICONOS SVG DE TIPOS
+   ========================================================= */
+
+.tipo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-height: 39px;
+
+    padding:
+        7px 13px 7px 9px;
+
+    isolation: isolate;
+
+}
+
+
+/*
+   Marco luminoso animado
+*/
+
+.tipo::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -1px;
+
+    border-radius: inherit;
+
+    padding: 1px;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent 20%,
+            var(--tipo-color),
+            rgba(255,255,255,0.8),
+            var(--tipo-color),
+            transparent 80%
+        );
+
+    background-size:
+        250% 100%;
+
+    animation:
+        tipoBorde 4s linear infinite;
+
+    opacity: 0.65;
+
+    z-index: -1;
+
+    /*
+       Recortamos el centro para
+       que quede solamente el borde
+    */
+
+    mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+
+    mask-composite: exclude;
+
+}
+
+
+.tipo-icono {
+
+    width: 27px;
+
+    height: 27px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            var(--tipo-color)
+        );
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+
+}
+
+
+/*
+   Efecto al pasar el mouse
+*/
+
+.tipo:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.03);
+
+    box-shadow:
+        inset 0 0 18px
+        color-mix(
+            in srgb,
+            var(--tipo-color) 20%,
+            transparent
+        ),
+
+        0 0 22px
+        color-mix(
+            in srgb,
+            var(--tipo-color) 25%,
+            transparent
+        );
+
+}
+
+
+.tipo:hover .tipo-icono {
+
+    transform:
+        rotate(-8deg)
+        scale(1.12);
+
+    filter:
+        drop-shadow(
+            0 0 9px
+            var(--tipo-color)
+        );
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN DEL BORDE
+   ========================================================= */
+
+@keyframes tipoBorde {
+
+    0% {
+
+        background-position:
+            200% 0;
+
+    }
+
+    100% {
+
+        background-position:
+            -50% 0;
+
+    }
+
+}
