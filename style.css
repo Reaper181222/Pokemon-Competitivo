@@ -1883,48 +1883,34 @@ img:not(.px-tipo-icon) {
 
 .ataque-categoria {
 
-    width: 82px;
-    height: 58px;
+    width: 48px;
+    height: 48px;
 
     display: inline-flex;
-
-    flex-direction: column;
 
     align-items: center;
     justify-content: center;
 
-    gap: 3px;
-
-    margin: 3px;
+    margin: 2px;
 
     position: relative;
 
     overflow: hidden;
 
-    border-radius: 12px;
-
-    font-weight: 900;
-
-    letter-spacing: 0.8px;
-
-    font-size: 9px;
+    border-radius: 11px;
 
     vertical-align: middle;
 
-    backdrop-filter: blur(6px);
-
-    box-shadow:
-        inset 0 0 15px rgba(255,255,255,0.05),
-        0 0 12px rgba(0,0,0,0.35);
+    flex-shrink: 0;
 
     transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 
 }
 
 
-/* brillo que recorre el botón */
+/* brillo que cruza */
 
 .ataque-categoria::after {
 
@@ -1932,23 +1918,23 @@ img:not(.px-tipo-icon) {
 
     position: absolute;
 
-    width: 35px;
-    height: 120px;
+    width: 16px;
+    height: 80px;
 
-    left: -50px;
-    top: -30px;
+    left: -35px;
+    top: -15px;
 
     transform: rotate(25deg);
 
     background:
         linear-gradient(
             transparent,
-            rgba(255,255,255,0.25),
+            rgba(255,255,255,0.30),
             transparent
         );
 
     animation:
-        ataqueBrillo 3.5s infinite;
+        ataqueBrillo 4s infinite;
 
 }
 
@@ -1956,197 +1942,331 @@ img:not(.px-tipo-icon) {
 .ataque-categoria:hover {
 
     transform:
-        translateY(-3px)
-        scale(1.04);
+        scale(1.08)
+        translateY(-2px);
 
 }
 
 
 /* =========================================================
-   FÍSICO
+   FÍSICO — EXPLOSIÓN
    ========================================================= */
 
 .ataque-fisico {
 
-    color: #fff4d0;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,75,35,0.65),
+            rgba(105,15,15,0.85) 70%
+        );
 
     border:
         1px solid
-        rgba(255,70,70,0.65);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(150,25,25,0.75),
-            rgba(55,10,15,0.9)
-        );
+        rgba(255,75,45,0.8);
 
     box-shadow:
-        inset 0 0 18px rgba(255,50,40,0.18),
-        0 0 15px rgba(255,40,40,0.18);
+
+        inset 0 0 12px
+        rgba(255,80,40,0.35),
+
+        0 0 10px
+        rgba(255,50,30,0.30);
 
 }
 
 
+/* explosión amarilla */
+
 .ataque-explosion {
 
-    color: #ffe66d;
+    display: block;
 
-    font-size: 28px;
+    color: #ffe84a;
 
-    line-height: 20px;
+    font-size: 34px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    -webkit-text-stroke:
+        1.5px #ff8c00;
 
     text-shadow:
-        0 0 5px #fff3a0,
-        0 0 15px rgba(255,190,0,0.8);
+
+        0 0 3px #fff4a0,
+
+        0 0 8px #ffc400,
+
+        0 0 16px
+        rgba(255,80,0,0.9);
 
     animation:
-        explosionPulso 1.4s infinite;
+        explosionFisica 1.15s
+        ease-in-out infinite;
 
 }
 
 
 /* =========================================================
-   ESPECIAL
+   ESPECIAL — ESPIRAL
    ========================================================= */
 
 .ataque-especial {
 
-    color: #dffaff;
+    background:
+        radial-gradient(
+            circle,
+            rgba(60,190,255,0.35),
+            rgba(5,45,90,0.92) 72%
+        );
 
     border:
         1px solid
-        rgba(0,200,255,0.65);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0,80,150,0.75),
-            rgba(5,25,60,0.9)
-        );
+        rgba(80,220,255,0.85);
 
     box-shadow:
-        inset 0 0 20px rgba(0,200,255,0.20),
-        0 0 18px rgba(0,170,255,0.20);
+
+        inset 0 0 14px
+        rgba(50,210,255,0.30),
+
+        0 0 12px
+        rgba(0,190,255,0.35);
 
 }
 
 
+/*
+   El espiral ya no es un "cargando".
+
+   Lo hacemos más parecido al SVG
+   que me pasaste:
+   una línea curva luminosa.
+*/
+
 .ataque-espiral {
 
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
+
+    display: block;
+
+    position: relative;
 
     border-radius: 50%;
 
     border:
         3px solid
-        #8eeaff;
-
-    border-right-color:
         transparent;
 
-    border-bottom-color:
-        rgba(142,234,255,0.25);
+    border-top-color:
+        #b8f5ff;
+
+    border-left-color:
+        #75ddff;
 
     box-shadow:
-        0 0 10px
-        rgba(80,220,255,0.8);
+
+        0 0 5px
+        #7eeaff,
+
+        0 0 12px
+        rgba(0,210,255,0.8);
 
     animation:
-        espiralGiro 1.3s linear infinite;
+        espiralGiro
+        1.5s
+        linear
+        infinite;
 
-    font-size: 0;
+}
+
+
+/*
+   Segunda curva interna
+*/
+
+.ataque-espiral::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 5px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        transparent;
+
+    border-right-color:
+        #d9fbff;
+
+    border-bottom-color:
+        rgba(100,225,255,0.8);
+
+    box-shadow:
+        0 0 5px
+        rgba(100,230,255,0.8);
+
+    animation:
+        espiralInterno
+        1s
+        linear
+        infinite
+        reverse;
 
 }
 
 
 /* =========================================================
-   ESTADO
+   ESTADO — PARTÍCULAS
    ========================================================= */
 
 .ataque-estado {
 
-    color: #e7e7e7;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(150,155,165,0.38),
+            rgba(30,32,38,0.95)
+        );
 
     border:
         1px solid
-        rgba(190,190,190,0.45);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(90,95,105,0.75),
-            rgba(25,28,34,0.95)
-        );
+        rgba(190,195,200,0.55);
 
     box-shadow:
-        inset 0 0 20px rgba(255,255,255,0.06),
-        0 0 15px rgba(0,0,0,0.4);
+
+        inset 0 0 14px
+        rgba(255,255,255,0.08),
+
+        0 0 10px
+        rgba(0,0,0,0.55);
 
 }
 
 
+/* contenedor */
+
 .ataque-particulas {
 
-    width: 35px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
 
     position: relative;
 
 }
 
 
+/* partículas */
+
 .ataque-particulas i {
 
     position: absolute;
 
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
 
     border-radius: 50%;
 
-    background: white;
+    background:
+        #f5f5f5;
+
+    box-shadow:
+        0 0 4px
+        rgba(255,255,255,0.8);
 
     animation:
-        particulaEstado 1.8s infinite ease-in-out;
+        particulaEstado
+        1.7s
+        ease-in-out
+        infinite;
 
 }
 
 
+/* posiciones */
+
 .ataque-particulas i:nth-child(1) {
-    left: 4px;
-    top: 12px;
+
+    left: 3px;
+    top: 14px;
+
 }
 
 
 .ataque-particulas i:nth-child(2) {
-    left: 13px;
-    top: 3px;
+
+    left: 10px;
+    top: 5px;
+
     background: #111;
-    animation-delay: 0.2s;
+
+    animation-delay:
+        0.15s;
+
 }
 
 
 .ataque-particulas i:nth-child(3) {
-    left: 21px;
-    top: 15px;
-    animation-delay: 0.4s;
+
+    left: 18px;
+    top: 12px;
+
+    animation-delay:
+        0.3s;
+
 }
 
 
 .ataque-particulas i:nth-child(4) {
-    left: 28px;
-    top: 6px;
+
+    left: 26px;
+    top: 4px;
+
     background: #111;
-    animation-delay: 0.6s;
+
+    animation-delay:
+        0.45s;
+
 }
 
 
 .ataque-particulas i:nth-child(5) {
-    left: 16px;
-    top: 20px;
-    animation-delay: 0.8s;
+
+    left: 24px;
+    top: 23px;
+
+    animation-delay:
+        0.6s;
+
+}
+
+
+.ataque-particulas i:nth-child(6) {
+
+    left: 12px;
+    top: 24px;
+
+    background: #111;
+
+    animation-delay:
+        0.75s;
+
+}
+
+
+.ataque-particulas i:nth-child(7) {
+
+    left: 3px;
+    top: 24px;
+
+    animation-delay:
+        0.9s;
+
 }
 
 
@@ -2157,38 +2277,62 @@ img:not(.px-tipo-icon) {
 @keyframes ataqueBrillo {
 
     0% {
-        left: -60px;
+
+        left: -40px;
+
     }
 
-    45%,
+    35%,
     100% {
+
         left: 110%;
+
     }
 
 }
 
 
-@keyframes explosionPulso {
+/* explosión */
+
+@keyframes explosionFisica {
 
     0%,
     100% {
 
         transform:
-            scale(0.9)
-            rotate(0deg);
+            scale(0.82)
+            rotate(-4deg);
 
     }
 
-    50% {
+    25% {
 
         transform:
-            scale(1.15)
-            rotate(12deg);
+            scale(1.08)
+            rotate(3deg);
+
+    }
+
+    45% {
+
+        transform:
+            scale(1.22)
+            rotate(-2deg);
+
+    }
+
+    65% {
+
+        transform:
+            scale(0.95)
+            rotate(2deg);
 
     }
 
 }
 
+
+/* espiral exterior */
 
 @keyframes espiralGiro {
 
@@ -2196,7 +2340,15 @@ img:not(.px-tipo-icon) {
 
         transform:
             rotate(0deg)
-            scale(0.85);
+            scale(0.88);
+
+    }
+
+    50% {
+
+        transform:
+            rotate(180deg)
+            scale(1.04);
 
     }
 
@@ -2204,12 +2356,35 @@ img:not(.px-tipo-icon) {
 
         transform:
             rotate(360deg)
-            scale(1.05);
+            scale(0.88);
 
     }
 
 }
 
+
+/* espiral interior */
+
+@keyframes espiralInterno {
+
+    from {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* partículas */
 
 @keyframes particulaEstado {
 
@@ -2218,19 +2393,24 @@ img:not(.px-tipo-icon) {
 
         transform:
             translate(0,0)
-            scale(0.7);
+            scale(0.65);
 
-        opacity: 0.45;
+        opacity:
+            0.35;
 
     }
 
     50% {
 
         transform:
-            translate(3px,-4px)
-            scale(1.25);
+            translate(
+                2px,
+                -4px
+            )
+            scale(1.3);
 
-        opacity: 1;
+        opacity:
+            1;
 
     }
 
